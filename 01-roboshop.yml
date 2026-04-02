@@ -6,7 +6,7 @@
     sg_id: sg-04ed9a90b34bd15be
     zonr_id: Z010927213W8PEK90FFQB
     domain_id: anandsurya.online
-    instaces: 
+    instances: 
     - mongodb
   tasks:
   - name: create instance
@@ -20,6 +20,6 @@
     loop: "{{ instances }}"
     register: ec2_output
 
-  - name: prnti the ec2 ec2_output
+  - name: prnti the ec2_output
     ansible.builtin.debug:
       msg: "{{ ec2_output }}"
