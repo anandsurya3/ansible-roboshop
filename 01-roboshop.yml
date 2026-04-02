@@ -1,0 +1,25 @@
+- name: creating instaces and update route records
+  hosts: local
+  connection: local
+  vars:
+    ami_id: ami-0220d79f3f480ecf5
+    sg_id: sg-04ed9a90b34bd15be
+    zonr_id: Z010927213W8PEK90FFQB
+    domain_id: anandsurya.online
+    instaces: 
+    - mongodb
+  tasks:
+  - name: create instance
+    amazon.aws.ec2_instance:
+      name: "{{ item }}"
+      instance_type: t3.micro
+      security_group: {{ sg_id }}
+      iamge_id: {{ ami_id }}
+      tags:
+        name: "{{ item }}"
+    loop: "{{ instances }}"
+    register: ec2_output
+
+  - name: prnti the ec2 ec2_output
+    ansible.builtin.debug:
+      msg: "{{ ec2_output }}"
