@@ -4,7 +4,7 @@
   vars:
     ami_id: ami-0220d79f3f480ecf5
     sg_id: sg-04ed9a90b34bd15be
-    zonr_id: Z010927213W8PEK90FFQB
+    zone_id: Z010927213W8PEK90FFQB
     domain_id: anandsurya.online
     instances: 
       - mongodb
@@ -25,3 +25,15 @@
   - name: print the ec2_output
     ansible.builtin.debug:
       msg: "{{ ec2_output }}"
+
+  - name: update route53 records
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_id }}"
+      record: "{{ item.item }}.{{ domain_id }}"
+      type: A
+      ttl: 1
+      value: "{{ item.instance[0].private_ip_address }}"
+      overwriten: true
+    loop: "{{ ec2_otput.result }}"
+      
