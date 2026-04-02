@@ -35,5 +35,5 @@
       ttl: 1
       value: "{{ item.instance[0].private_ip_address }}"
       overwriten: true
-    loop: "{{ ec2_output.result }}"
+    loop: "{{ ec2_output.results }}"
       
